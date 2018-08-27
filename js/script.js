@@ -4,18 +4,22 @@ $(document).ready(function(){
         rules: {
             Username: {
                 required: true,
+                minlength: 3,
                 maxlength: 30
             },
             Username_furigana: {
                 required: true,
+                minlength: 5,
                 maxlength: 30
             },
             region: {
                 required: true,
+                minlength: 3,
                 maxlength: 50
             },
             address :{
                 required: true,
+                minlength: 5,
                 maxlength: 100,
             },
             mail: {
@@ -25,24 +29,29 @@ $(document).ready(function(){
             },
             password: {
                 required: true,
-                maxlength: 30
+                maxlength: 30,
+                minlength: 8
             }
         },
         messages: {
             Username: {
                 required: "このフィールドは必須です。",
+                minlength: $.validator.format( "{0} 文字以上で入力してください。" ),
                 maxlength: $.validator.format( "{0} 文字以内で入力してください。" )
             },
             Username_furigana: {
                 required: "このフィールドは必須です。",
+                minlength: $.validator.format("{0} 文字以上で入力してください。"),
                 maxlength: $.validator.format( "{0} 文字以内で入力してください。" )
             },
             region: {
                 required: "このフィールドは必須です。",
+                minlength: $.validator.format("{0} 文字以上で入力してください。"),
                 maxlength: $.validator.format( "{0} 文字以内で入力してください。" )
             },
             address: {
                 required: "このフィールドは必須です。",
+                minlength: $.validator.format("{0} 文字以上で入力してください。"),
                 maxlength: $.validator.format( "{0} 文字以内で入力してください。" ),
             },
             mail: {
@@ -53,25 +62,27 @@ $(document).ready(function(){
             password: {
                 required: "このフィールドは必須です。",
                 maxlength: $.validator.format( "{0} 文字以内で入力してください。" ),
+                minlength: $.validator.format("{0} 文字以上で入力してください。")
             }
         }
     });
     var validator = $( "#signup-form" ).validate();
     $("#mail").blur(function (e) { 
         e.preventDefault();
-        console.log("test");
         var mail = $('#mail').val();
         if(validator.element('#mail')){
             $.get("check_email_exist.php",{mail: mail}, function(data){
                 if (data === "yes"){
                     $('#check-mail').html("このEメールアドレスが存在しました！");
-                    $('#mail').html("").focus();
+                    $('#check-mail').css("color", "red");
+                    $('#submit-signup').attr("disabled", true);
                 }
                 else {
                     $('#check-mail').html("このEメールアドレスはいいです！");
+                    $('#check-mail').css("color", "green");
+                    $('#submit-signup').attr("disabled", false);
                 }
             })
         }        
     });
-
 })

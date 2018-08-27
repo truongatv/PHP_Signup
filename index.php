@@ -36,7 +36,7 @@
                         <input class="text" type="password" name="password" id="password" placeholder="パスワード">
                     </div>
                     <div class="form-group submit-signup">
-                        <input type="submit" class="btn btn-success" id="submit-signup" value="Submit" onclick="return ">
+                        <input type="submit" class="btn btn-success" id="submit-signup" value="Submit" >
                     </div>
                 </form>
             </div>

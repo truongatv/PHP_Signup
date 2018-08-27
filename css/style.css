@@ -1,5 +1,9 @@
+body{
+    font-family: ’ヒラギノ角ゴ Pro W3’, ‘Hiragino Kaku Gothic Pro’, メイリオ, Meiryo, Osaka, ‘MS Pゴシック’, ‘MS PGothic’, sans-serif !important;
+}
 label{
     width: 50px;
+    color: red;
 }
 .submit-signup{
     margin-top: 30px;
@@ -25,5 +29,28 @@ label[class="error"], #check-mail {
     width: 250px;
     padding:10px;
     border-radius: 4px;
+    margin-right: 20px;
+}
+table{
+    margin-top: 30px;
+    border-collapse: collapse;
+    width: 35%;
+}
+tr{
+    margin-bottom:20px;
+}
+th, td{
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+tr>td:first-child{
+    font-weight: bold;
+    font-size: 13pt;
+}
+.button{
+    margin-top: 20px;
+}
+#back-button{
     margin-right: 20px;
 }

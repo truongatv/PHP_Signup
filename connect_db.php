@@ -18,7 +18,7 @@
                 furigana VARCHAR(30) NOT NULL,
                 region VARCHAR(50) NOT NULL,
                 address VARCHAR(100) NOT NULL,
-                email VARCHAR(50) NOT NULL,
+                email VARCHAR(50) NOT NULL ,
                 pass VARCHAR(50) NOT NULL
                 )";
             if($conn->query($sql) === false){
