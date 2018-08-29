@@ -5,27 +5,32 @@ $(document).ready(function(){
             Username: {
                 required: true,
                 minlength: 3,
-                maxlength: 30
+                maxlength: 30,
+                validateUser: true
             },
             Username_furigana: {
                 required: true,
                 minlength: 5,
-                maxlength: 30
+                maxlength: 30,
+                validateFurigana: true
             },
             region: {
                 required: true,
                 minlength: 3,
-                maxlength: 50
+                maxlength: 50,
+                validateRegion: true
             },
             address :{
                 required: true,
                 minlength: 5,
                 maxlength: 100,
+                validateAddress: true
             },
             mail: {
                 required: true,
                 maxlength: 50,
-                email: true
+                email: true,
+                validateEmail: true
             },
             password: {
                 required: true,
@@ -37,27 +42,32 @@ $(document).ready(function(){
             Username: {
                 required: "このフィールドは必須です。",
                 minlength: $.validator.format( "{0} 文字以上で入力してください。" ),
-                maxlength: $.validator.format( "{0} 文字以内で入力してください。" )
+                maxlength: $.validator.format( "{0} 文字以内で入力してください。" ),
+                validateUser: "この名前はじゃない！"
             },
             Username_furigana: {
                 required: "このフィールドは必須です。",
                 minlength: $.validator.format("{0} 文字以上で入力してください。"),
-                maxlength: $.validator.format( "{0} 文字以内で入力してください。" )
+                maxlength: $.validator.format( "{0} 文字以内で入力してください。" ),
+                validateFurigana: "このふりがなはじゃない！"
             },
             region: {
                 required: "このフィールドは必須です。",
                 minlength: $.validator.format("{0} 文字以上で入力してください。"),
-                maxlength: $.validator.format( "{0} 文字以内で入力してください。" )
+                maxlength: $.validator.format( "{0} 文字以内で入力してください。" ),
+                validateRegion: "この都道府県は有効じゃない！"
             },
             address: {
                 required: "このフィールドは必須です。",
                 minlength: $.validator.format("{0} 文字以上で入力してください。"),
                 maxlength: $.validator.format( "{0} 文字以内で入力してください。" ),
+                validateAddress: "この住所は有効じゃない！"
             },
             mail: {
                 required: "このフィールドは必須です。",
                 maxlength: $.validator.format( "{0} 文字以内で入力してください。" ),
-                email: "有効なEメールアドレスを入力してください。"
+                email: "有効なEメールアドレスを入力してください。",
+                validateEmail: "有効なEメールアドレスを入力してください",
             },
             password: {
                 required: "このフィールドは必須です。",
@@ -67,6 +77,44 @@ $(document).ready(function(){
         }
     });
     var validator = $( "#signup-form" ).validate();
+    $.validator.addMethod("validateUser", function(value){
+        var exp = /\d|[\$,\！,\＠,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\@,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/ ;
+        if(exp.test(value)){
+            return false
+        };
+        return true;
+    });
+    $.validator.addMethod("validateFurigana", function(value){
+        var exp = /\d|[\$,\！,\＠,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\@,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/ ;
+        if(exp.test(value)){
+            return false
+        };
+        return true;
+    });
+    $.validator.addMethod("validateRegion", function(value){
+        var exp = /\d|[\$,\！,\＠,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\@,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/ ;
+        if(exp.test(value)){
+            return false
+        };
+        return true;
+    });
+    $.validator.addMethod("validateAddress", function(value){
+        var exp = /[\$,\！,\＠,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\@,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/ ;
+        if(exp.test(value)){
+            return false
+        };
+        return true;
+    });
+    $.validator.addMethod("validateEmail", function(value){
+        var exp_special = /[\$,\！,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/ ;
+        var exp_dotcom = /.*\..*/
+        if(!exp_special.test(value) && exp_dotcom.test(value)){
+            return true 
+        }
+        else {
+            return false;
+        } 
+    });
     $("#mail").blur(function (e) { 
         e.preventDefault();
         var mail = $('#mail').val();

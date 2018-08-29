@@ -11,19 +11,28 @@
         $mail = $_POST['mail'];
         $password = $_POST['password'];
         $error_message = "";
-        $sql = "SELECT * FROM accounts WHERE email = '" . $mail . "'";
-        if($conn->query($sql)->num_rows > 0){
-            echo "このEメールアドレスが存在しました！登録できない！もう一度登録お願い致します！";
+        $exp_special = '/\d|[\$,\！,\＠,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\@,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/';
+        $exp_special_address = '/[\$,\！,\＠,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\@,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/';
+        $exp_special_mail = '/[\$,\！,\＃,\＄,\％,\＾,\＆,\＊,\（,\）,\ー,\＝,\＋,\？,\＜,\＞,\・,\!,\#,\%,\^,\&,\*,\(,\),\<,\>,\+,\=,\?]/';
+        if(preg_match($exp_special, $username) || preg_match($exp_special, $furigana) || preg_match($exp_special,$region) || preg_match($exp_special_address, $address) || preg_match($exp_special_mail, $mail)){
+            echo "この情報は有効じゃないです！";
         }
-        else {
-            $sql = "INSERT INTO accounts (username, furigana, region, address, email, pass) VALUES ('". $username . "','" . $furigana . "','" . $region . "','" . $address ."','" . $mail  . "','" . $password ."')";
-            if($conn->query($sql) === TRUE){
-                echo "登録しました！ ありがとうございました！";
+        else{
+            $sql = "SELECT * FROM accounts WHERE email = '" . $mail . "'";
+            if($conn->query($sql)->num_rows > 0){
+                echo "このEメールアドレスが存在しました！登録できない！もう一度登録お願い致します！";
             }
             else {
-                echo "登録できない！もう一度登録お願い致します！";
+                $sql = "INSERT INTO accounts (username, furigana, region, address, email, pass) VALUES ('". $username . "','" . $furigana . "','" . $region . "','" . $address ."','" . $mail  . "','" . $password ."')";
+                if($conn->query($sql) === TRUE){
+                    echo "登録しました！ ありがとうございました！";
+                }
+                else {
+                    echo "登録できない！もう一度登録お願い致します！";
+                }
             }
         }
+        
         
     }
 ?>
